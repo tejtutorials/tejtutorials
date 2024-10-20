@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{%block title%}Courses | Tej Tutorials{%endblock title%}
+{%block body %}
+<div class="container">
+    <h1  class="whcytt ">Courses Offered By Us</h1>
+    <div style="display:flex;  flex-wrap: wrap; ">
+        {% for c in course %}
+        <div class="card xx" style="width: 20rem; ">
+            <img src="{{ c.imglink }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ c.name }}</h5>
+                <p class="card-text">{{ c.description }}</p>
+                <a href="/connect" class="btn btn-primary">Contact us now for enquiry</a>
+            </div>
+        </div>
+        {% endfor %}
+
+
+    </div>
+
+
+<hr class="featurette-divider">
+
+    
+</div>
+
+{%endblock body%}

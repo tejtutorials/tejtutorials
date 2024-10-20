@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{%block title%}Moments | Tej Tutorials {%endblock title%}
+{%block body %}
+<div class="container">
+    <h1 class="whcytt">Moments</h1>
+    <hr class="feturette-divider">
+    <div class="parentrow" style="display:inline-flex; flex-wrap: wrap; "> 
+        {% for m in moment reversed %}
+        <div class="row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+    
+                <div class="card" style="width: 20rem;">
+                    <img src="{{ m.imglink }}" class="card-img-top" alt="">
+    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ m.name }}</h5>
+                        <p class="card-text">{{m.short}}</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{m.Uniqueid}}">
+                            See more
+                        </button>
+                        <div class="modal fade" id="{{m.Uniqueid}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ m.name }}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body height:fit-content;">
+                                        {{ m.big }}
+                                        <br><br>
+                                        {% if  m.linkforvideo  != 'None' %}
+                                        <iframe style="width: 100%; height:500px;"src="{{ m.linkforvideo }}" frameborder="0"></iframe>
+                                        {% endif %}
+                                        {% if m.linkformultiplephotos != 'None' %}
+                                            <blockquote style="text-align: center;" class="imgur-embed-pub" lang="en" data-id="a/T9bxuAX" data-context="false"><a
+                                                    href="{{ m.linkformultiplephotos }}"></a></blockquote>
+                                            <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        {% endfor %}
+        </div>
+        <hr class="featurette-divider">
+</div>
+
+{%endblock body %}

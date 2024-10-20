@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{%block title%}Tej Tutorials{%endblock title%}
+{%block body %}
+
+
+
+<main>
+
+        <h1 class="testimonhead" style="margin-top:70px;"> Our top Faculty</h1>
+<div class="container">
+    {% for t in teacher %}
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">{{ t.name }} <span class="text-body-secondary">-{{t.subject}}</span></h2>
+            <p class="lead">{{t.description}}
+            </p>
+        </div>
+        <div class="col-md-5">
+            <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+                height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+                preserveAspectRatio="xMidYMid slice" focusable="false"> -->
+                <img style="width: 350px;" class="img-circle" src="{{ t.imglink }}" alt="">
+        </div>
+        <hr class="featurette-divider">
+        {% endfor %}
+    </div>
+</div>
+</main>
+
+
+<!-- /END THE FEATURETTES -->
+{%endblock body %}
