@@ -106,7 +106,7 @@
           </p>
         </div>
         <div class="col-md-5">
-          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
+          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title></title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
         </div>
       </div>
       <hr class="featurette-divider">
@@ -189,8 +189,12 @@
           <script src="https://static.elfsight.com/platform/platform.js" async></script>
           <div style="background-color: rgba(255, 255, 255, 0.719);"class="elfsight-app-4dbcc1aa-131f-4bfe-bf7e-3c9ee9d4c8b6 p-5 mb-4  rounded-3" data-elfsight-app-lazy></div>
           </div>
+          <div id="videosmall">
+            <button id="CloseButton" onclick="myFunction()" ><i class="material-icons"> close </i></button>
+            <video id="video2" width="350px" height="200px" class="float-right" controls autoplay muted preload="auto"><source src="/static/sample.mp4" type="video/mp4"></video>
+
+          </div>
           </main>
-      
     
       <!-- /END THE FEATURETTES -->
 {%endblock body %}
