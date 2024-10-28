@@ -38,8 +38,8 @@ class Moment(models.Model):
     short =  models.TextField(max_length=500)
     big =  models.TextField(max_length=5000)
     imglink =  models.CharField(max_length=500,default="/static/blank.png")
-    linkforvideo =  models.CharField(max_length=500,null=True,)
-    linkformultiplephotos =  models.CharField(max_length=500,null=True,)
+    linkforvideo =  models.CharField(max_length=500,null=True,default="None")
+    linkformultiplephotos =  models.CharField(max_length=500,null=True,default="None")
 
 
     def __str__(self):
