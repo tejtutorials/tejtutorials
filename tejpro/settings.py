@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-n*vcauf6d6-f%a%y1(b6j^lk&41cpfdi^5$=q(cbhtvfps$)u)
 DEBUG = False
 # DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','www.tejtutorials.in']
+ALLOWED_HOSTS = ['127.0.0.1','www.tejtutorials.in','*']
 
 
 # Application definition
