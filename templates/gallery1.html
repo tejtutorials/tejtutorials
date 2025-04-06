@@ -1,0 +1,457 @@
+{% extends 'base1.html' %}
+{% block title %}Gallery | Tej Tutorials{% endblock title %}
+{% block body %}
+
+<style>
+    /* Main styling */
+    .gallery-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+    
+    .gallery-header {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #333;
+        padding: 20px 0;
+        border-bottom: 1px solid #eaeaea;
+        font-family: "Poppins", sans-serif;
+    }
+    
+    .gallery-header h1 {
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .gallery-header p {
+        font-size: 1.2rem;
+        color: #7f8c8d;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    /* Slider styling */
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        margin-bottom: 40px;
+        background-color: #fff;
+    }
+    
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    
+    .slide {
+        min-width: 100%;
+        position: relative;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    
+    .slide.active {
+        display: block;
+        opacity: 1;
+    }
+    
+    .slide img {
+        width: 100%;
+        height: 550px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .slide img:hover {
+        transform: scale(1.02);
+    }
+    
+    .slide-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4), transparent);
+        color: white;
+        padding: 30px 20px 20px;
+    }
+    
+    .slide-info h3 {
+        margin: 0 0 8px 0;
+        font-size: 1.8rem;
+        font-weight: 500;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    
+    .slide-info p {
+        margin: 0;
+        font-size: 1.1rem;
+        max-width: 80%;
+        line-height: 1.5;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    
+    .slider-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+    
+    .slider-nav button {
+        background: rgba(255,255,255,0.8);
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        cursor: pointer;
+        margin: 0 15px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .slider-nav button:hover {
+        background: rgba(255,255,255,1);
+        transform: scale(1.1);
+    }
+    
+    .slider-dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #ddd;
+        margin: 0 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
+    
+    .dot:hover {
+        background: #bbb;
+    }
+    
+    .dot.active {
+        background: #3498db;
+        transform: scale(1.2);
+        border-color: #fff;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    }
+    
+    /* Modal styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.85);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .modal.show {
+        opacity: 1;
+    }
+    
+    .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 12px;
+        width: 85%;
+        max-width: 1000px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        position: relative;
+        transform: translateY(-50px);
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+    
+    .modal.show .modal-content {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .close-modal {
+        position: absolute;
+        right: 25px;
+        top: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #555;
+        cursor: pointer;
+        transition: color 0.2s;
+        z-index: 10;
+    }
+    
+    .close-modal:hover {
+        color: #e74c3c;
+    }
+    
+    .modal-header {
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 20px;
+        margin-bottom: 25px;
+    }
+    
+    .modal-header h2 {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 2.2rem;
+        font-weight: 600;
+    }
+    
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .modal-description {
+        line-height: 1.8;
+        color: #444;
+        font-size: 1.1rem;
+        padding: 0 5px;
+    }
+    
+    .modal-video ,.multiple-photos{
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .modal-video iframe {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .multiple-photos {
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+    
+    @media (max-width: 768px) {
+        .gallery-header h1 {
+            font-size: 2.2rem;
+        }
+        
+        .slide img {
+            height: 400px;
+        }
+        
+        .slide-info h3 {
+            font-size: 1.5rem;
+        }
+        
+        .slide-info p {
+            font-size: 1rem;
+        }
+        
+        .slider-nav button {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .modal-content {
+            width: 95%;
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="gallery-container">
+    <div class="gallery-header">
+        <h1>Tej Tutorials Gallery</h1>
+        <p>Explore our collection of moments with Tej</p>
+    </div>
+    
+    <div class="slider-container">
+        <div class="slides">
+            {% for item in moment reversed %}
+            <div class="slide" data-id="{{ item.Uniqueid }}">
+                <img src="{{ item.imglink }}" alt="{{ item.name }}">
+                <div class="slide-info">
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.short }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="slider-nav">
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+    </div>
+    
+    <div class="slider-dots">
+        {% for item in moment reversed %}
+        <span class="dot" data-index="{{ forloop.counter }}"></span>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal for detailed view -->
+{% for item in moment reversed %}
+<div id="modal-{{ item.Uniqueid }}" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-header">
+            <h2>{{ item.name }}</h2>
+        </div>
+        <div class="modal-body">
+            {% if item.linkforvideo != 'None' %}
+            <div class="modal-video">
+                <!-- <iframe  src="{{ item.linkforvideo }}" frameborder="0"></iframe> -->
+                <iframe src="{{ item.linkforvideo }}"
+                    allow="autoplay"></iframe>
+            </div>
+            {% endif %}
+            {% if item.linkformultiplephotos != 'None' %}
+            <div class="multiple-photos">
+                <blockquote style="text-align: center;" class="imgur-embed-pub" lang="en" data-id="{{  item.linkformultiplephotos|slice:'12:' }}" data-context="false">
+                    <a href="{{ item.linkformultiplephotos }}"></a>
+                </blockquote>
+                <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+            </div>
+            {% endif %}
+            <div class="modal-description">
+                {{ item.big }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let slideIndex = 1;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        
+        // Initialize the slider
+        showSlides(slideIndex);
+        
+        // Event listeners for prev/next buttons
+        prevBtn.addEventListener('click', function() {
+            showSlides(slideIndex -= 1);
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            showSlides(slideIndex += 1);
+        });
+        
+        // Event listeners for dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                showSlides(slideIndex = index);
+            });
+        });
+        
+        // Event listeners for slides (to open modal)
+        slides.forEach(slide => {
+            slide.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                openModal(id);
+            });
+        });
+        
+        // Event listeners for close buttons
+        document.querySelectorAll('.close-modal').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                closeModal(modal);
+            });
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target);
+            }
+        });
+        
+        // Function to show slides
+        function showSlides(n) {
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            slides[slideIndex - 1].classList.add('active');
+            dots[slideIndex - 1].classList.add('active');
+        }
+        
+        // Function to open modal
+        function openModal(id) {
+            const modal = document.getElementById('modal-' + id);
+            modal.style.display = 'block';
+            
+            // Add a small delay before adding the 'show' class for the animation
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        // Function to close modal
+        function closeModal(modal) {
+            modal.classList.remove('show');
+            
+            // Wait for the animation to complete before hiding the modal
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+            
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        // Auto-advance slides every 5 seconds
+        setInterval(function() {
+            showSlides(slideIndex += 1);
+        }, 10000);
+    });
+</script>
+
+{% endblock body %}

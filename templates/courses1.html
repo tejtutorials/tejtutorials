@@ -1,0 +1,588 @@
+{% extends 'base1.html' %}
+{%block title%}Tej Tutorials{%endblock title%}
+{%block body %}
+<style>
+    /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(52, 152, 219, 0.8), rgba(52, 152, 219, 0.9)), url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');
+    background-size: cover;
+    background-position: center;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Filters Section */
+.filters {
+    background-color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filters .container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.search-bar {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #2980b9;
+}
+
+.filter-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-options select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    min-width: 150px;
+    cursor: pointer;
+}
+
+/* Courses Section */
+.courses {
+    padding: 60px 0;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.course-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.course-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.course-card:hover .course-image img {
+    transform: scale(1.05);
+}
+
+.course-content {
+    padding: 20px;
+}
+
+.course-category {
+    display: inline-block;
+    background-color: #e3f2fd;
+    color: #3498db;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.course-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #333;
+}
+
+.course-instructor {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.instructor-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.instructor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.instructor-name {
+    font-size: 14px;
+    color: #666;
+}
+
+.course-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.course-rating {
+    display: flex;
+    align-items: center;
+}
+
+.course-rating i {
+    color: #f39c12;
+    margin-right: 5px;
+}
+
+.course-students i {
+    margin-right: 5px;
+}
+
+.course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.course-price {
+    font-weight: 700;
+    font-size: 18px;
+    color: #3498db;
+}
+
+.course-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.course-btn:hover {
+    background-color: #2980b9;
+}
+
+
+
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    
+    
+    .hero h1 {
+        font-size: 32px;
+    }
+    
+    .filter-options select {
+        width: 100%;
+    }
+}
+</style>
+    
+
+    <section class="hero">
+        <div class="container">
+            <h1>Expand Your Knowledge</h1>
+            <p>Browse our collection of high-quality courses designed to help you master new skills</p>
+        </div>
+    </section>
+
+    <section class="filters">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search courses...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="filter-options">
+                <select id="category-filter">
+                    <option value="">All Categories</option>
+                    <option value="CBSE">CBSE</option>
+                    <option value="ICSE">ICSE</option>
+                </select>
+                <select id="level-filter">
+                    <option value="">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <select id="sort-by">
+                    <option value="popular">Most Popular</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="courses">
+        <div class="container">
+            <div class="courses-grid" id="courses-container">
+                <!-- Course cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+   
+
+    <script>
+        // Sample course data
+            const courses = [
+                {
+                    id: 1,
+                    title: "VII - VIII ICSE",
+                    category: "ICSE",
+                    level: "beginner",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/1.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.8,
+                    students: 12,
+                    price: "Contact",
+                    popular: false,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 2,
+                    title: "IX and X Science ICSE",
+                    category: "ICSE",
+                    level: "intermediate",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/1.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.9,
+                    students: 20,
+                    price: "Contact",
+                    popular: true,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 3,
+                    title: "IX and X Commerce ICSE",
+                    category: "ICSE",
+                    level: "intermediate",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/2.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.7,
+                    students: 10,
+                    price: "Contact",
+                    popular: true,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 4,
+                    title: "VII - VIII CBSE",
+                    category: "CBSE",
+                    level: "beginner",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/1.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.8,
+                    students: 4,
+                    price: "Contact",
+                    popular: false,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 5,
+                    title: "IX and X Science CBSE",
+                    category: "CBSE",
+                    level: "intermediate",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/1.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.9,
+                    students: 10,
+                    price: "Contact",
+                    popular: true,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 6,
+                    title: "IX and X Commerce CBSE",
+                    category: "CBSE",
+                    level: "intermediate",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/2.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.7,
+                    students: 2,
+                    price: "Contact",
+                    popular: true,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 7,
+                    title: "NEET",
+                    category: "CBSE",
+                    level: "advanced",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/2.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.7,
+                    students: 1,
+                    price: "Contact",
+                    popular: true,
+                    date: "2025-01-15"
+                },
+                {
+                    id: 6,
+                    title: "JEE",
+                    category: "CBSE",
+                    level: "advanced",
+                    instructor: {
+                        name: "Tejal maam",
+                        avatar: "https://randomuser.me/api/portraits/women/2.jpg"
+                    },
+                    image: "https://i.imgur.com/F2WNljH.png",
+                    rating: 4.7,
+                    students: 1,
+                    price: "Contact",
+                    popular: true,
+                    date: "2025-01-15"
+                },
+                
+            ];
+
+            // DOM elements
+            const coursesContainer = document.getElementById('courses-container');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const categoryFilter = document.getElementById('category-filter');
+            const levelFilter = document.getElementById('level-filter');
+            const sortBy = document.getElementById('sort-by');
+
+            // Initialize the page
+            document.addEventListener('DOMContentLoaded', () => {
+                renderCourses(courses);
+                setupEventListeners();
+            });
+
+            // Render courses to the DOM
+            function renderCourses(coursesToRender) {
+                coursesContainer.innerHTML = '';
+
+                if (coursesToRender.length === 0) {
+                    coursesContainer.innerHTML = `
+            <div class="no-courses">
+                <h3>No courses found</h3>
+                <p>Try adjusting your filters or search term</p>
+            </div>
+        `;
+                    return;
+                }
+
+                coursesToRender.forEach(course => {
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+            <div class="course-image">
+                <img src="${course.image}" alt="${course.title}">
+            </div>
+            <div class="course-content">
+                <span class="course-category">${getCategoryName(course.category)}</span>
+                <h3 class="course-title">${course.title}</h3>
+                <div class="course-instructor">
+                    <div class="instructor-avatar">
+                        <img src="${course.instructor.avatar}" alt="${course.instructor.name}">
+                    </div>
+                    <span class="instructor-name">${course.instructor.name}</span>
+                </div>
+                <div class="course-stats">
+                    <div class="course-rating">
+                        <i class="fas fa-star"></i>
+                        <span>${course.rating}</span>
+                    </div>
+                    <div class="course-students">
+                        <i class="fas fa-user"></i>
+                        <span>${formatNumber(course.students)} students</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <div class="course-price">$${course.price}</div>
+                    <button class="course-btn">Contact Now</button>
+                </div>
+            </div>
+        `;
+                    coursesContainer.appendChild(courseCard);
+                });
+            }
+
+            // Set up event listeners
+            function setupEventListeners() {
+                // Search functionality
+                searchBtn.addEventListener('click', filterCourses);
+                searchInput.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') {
+                        filterCourses();
+                    }
+                });
+
+                // Filter and sort functionality
+                categoryFilter.addEventListener('change', filterCourses);
+                levelFilter.addEventListener('change', filterCourses);
+                sortBy.addEventListener('change', filterCourses);
+            }
+
+            // Filter and sort courses
+            function filterCourses() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const category = categoryFilter.value;
+                const level = levelFilter.value;
+                const sort = sortBy.value;
+
+                let filteredCourses = courses.filter(course => {
+                    // Apply search filter
+                    const matchesSearch = course.title.toLowerCase().includes(searchTerm) ||
+                        course.instructor.name.toLowerCase().includes(searchTerm);
+
+                    // Apply category filter
+                    const matchesCategory = category === '' || course.category === category;
+
+                    // Apply level filter
+                    const matchesLevel = level === '' || course.level === level;
+
+                    return matchesSearch && matchesCategory && matchesLevel;
+                });
+
+                // Apply sorting
+                switch (sort) {
+                    case 'popular':
+                        filteredCourses.sort((a, b) => b.students - a.students);
+                        break;
+                    case 'newest':
+                        filteredCourses.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        break;
+                    case 'price-low':
+                        filteredCourses.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'price-high':
+                        filteredCourses.sort((a, b) => b.price - a.price);
+                        break;
+                }
+
+                renderCourses(filteredCourses);
+            }
+
+            // Helper function to get category display name
+            function getCategoryName(categorySlug) {
+                const categories = {
+                    'ICSE': 'ICSE',
+                    'CBSE': 'CBSE'
+                };
+                return categories[categorySlug] || categorySlug;
+            }
+
+            // Helper function to format numbers
+            function formatNumber(num) {
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'k';
+                }
+                return num;
+            }
+    </script>
+
+{% endblock body %}
